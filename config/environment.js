@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function(environment) {
+
   let ENV = {
     modulePrefix: 'library-ui',
     environment,
@@ -23,12 +24,21 @@ module.exports = function(environment) {
     }
   };
 
+  ENV.APP.USE_MIRAGE = false;
+  if (environment === 'mirage') {
+    ENV.APP.USE_MIRAGE = true;
+    environment = 'development';
+  }
+  
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV['ember-cli-mirage'] = {
+      enabled: ENV.APP.USE_MIRAGE,
+    };
   }
 
   if (environment === 'test') {
